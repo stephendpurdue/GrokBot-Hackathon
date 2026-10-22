@@ -1,10 +1,16 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { IntroRunResult, SpeakerResult } from "../src/lib/contract/schema";
 import { gatherGitHub } from "../src/lib/sources/github";
 import { runIntros } from "../src/lib/pipeline/intros";
+import { decideRevives } from "../src/lib/pipeline/revive";
 import { findSpeakers } from "../src/lib/pipeline/speakers";
 import { loadEnvFile } from "./env";
 
 loadEnvFile();
+// Pair and quote assertions stay on the template. A configured model would replace the sentences.
+delete process.env.LLM_API_KEY;
+delete process.env.LLM_MODEL;
 
 const failures: string[] = [];
 
@@ -65,6 +71,24 @@ async function main() {
     "chioma 404",
   );
   expect(!forced.names.includes("chioma-not-a-real-user"), "404 is not a pick");
+
+  const empty = await gatherGitHub("community bots", [], async (input) => {
+    const url = String(input);
+    if (url.includes("/search/users")) return Response.json({ items: [] });
+    return new Response("no", { status: 500 });
+  });
+  expect(empty.evidence.length > 0 && empty.evidence.every((item) => item.label === "fixture"), "empty search uses fixture");
+  expect(empty.attempts.some((attempt) => attempt.detail.includes("exact query returned no users")), "empty search is a failure");
+
+  const seed = JSON.parse(readFileSync(resolve(process.cwd(), "data/seed.json"), "utf8")) as {
+    messages: Array<{ threadId: string; content: string; createdAt: string }>;
+  };
+  const revived = decideRevives(seed.messages, "2026-10-22");
+  const revivedIds = revived.revives.map((revive) => revive.threadId).sort();
+  expect(JSON.stringify(revivedIds) === JSON.stringify(["bots", "rust-planning"]), `revives ${revivedIds.join(", ")}`);
+  expect(revived.revives.every((revive) => revive.draftMessage.includes(revive.quote)), "opening quote kept");
+  expect(revived.attempts.some((attempt) => attempt.subject === "lunch" && attempt.detail === "still active"), "lunch active");
+  expect(revived.attempts.some((attempt) => attempt.subject === "meme" && attempt.detail === "too thin"), "meme thin");
 
   const speakers = SpeakerResult.parse(await findSpeakers("community bots"));
   console.log("speakers", speakers.picks.map((pick) => `${pick.kind}:${pick.name}`).join(", "));

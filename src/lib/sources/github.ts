@@ -1,7 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { z } from "zod";
-import { topicWords } from "../contract/match";
 import type { Attempt, Evidence } from "../contract/schema";
 
 const API = "https://api.github.com";
@@ -110,31 +109,9 @@ export async function gatherGitHub(
 
   try {
     const exact = await searchUsers(`${topic} location:London`, fetchImpl, signal);
-    const logins: string[] = [];
-    // shortcut: GitHub user search ANDs every word, so "community bots location:London" is empty; fall back to each topic word until that query starts returning people.
-    if (exact.length === 0) {
-      attempts.push({
-        runKind: "source",
-        status: "ok",
-        subject: "github",
-        detail: "exact query returned no users; searched topic words in London",
-      });
-      const seen = new Set<string>();
-      const words = [...topicWords(topic)].sort((a, b) => a.length - b.length);
-      for (const word of words) {
-        const items = await searchUsers(`${word} location:London`, fetchImpl, signal);
-        for (const item of items) {
-          if (seen.has(item.login)) continue;
-          seen.add(item.login);
-          logins.push(item.login);
-          if (logins.length >= 5) break;
-        }
-        if (logins.length >= 5) break;
-      }
-    } else {
-      logins.push(...exact.map((item) => item.login));
-    }
-    const users = await hydrate(logins.slice(0, 5), fetchImpl, signal);
+    if (exact.length === 0) throw new Error("exact query returned no users");
+    const users = await hydrate(exact.map((item) => item.login), fetchImpl, signal);
+    if (users.length === 0) throw new Error("github profiles missing");
     return {
       evidence: users.map((user) => toEvidence(user, "live")),
       names: users.map(displayName),

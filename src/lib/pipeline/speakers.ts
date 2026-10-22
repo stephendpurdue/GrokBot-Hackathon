@@ -1,9 +1,52 @@
+import { z } from "zod";
 import { memberTopicHits } from "../contract/match";
 import type { Attempt, Evidence, SpeakerPick, SpeakerResult } from "../contract/schema";
+import { chatJSON } from "../llm/client";
 import { tryDb } from "./db";
 import { memory, rememberAttempts } from "./memory";
 import { loadPeople, type Person } from "./people";
+import { gatherDevpost } from "../sources/devpost";
 import { gatherGitHub } from "../sources/github";
+import { gatherHn } from "../sources/hn";
+import { gatherLuma } from "../sources/luma";
+
+const Whys = z.object({
+  whys: z.array(z.object({
+    name: z.string(),
+    why: z.string().min(1).max(400),
+  })),
+});
+
+function toPublic(gathered: { evidence: Evidence[]; names: string[] }): SpeakerPick[] {
+  return gathered.evidence.flatMap((evidence, index) => {
+    const name = gathered.names[index];
+    if (!name || evidence.text.length === 0) return [];
+    return [{ name, kind: "public" as const, why: evidence.text, evidence: [evidence] }];
+  });
+}
+
+async function applyWhys(topic: string, picks: SpeakerPick[]): Promise<SpeakerPick[]> {
+  if (!process.env.LLM_API_KEY || !process.env.LLM_MODEL || picks.length === 0) return picks;
+  try {
+    const result = await chatJSON({
+      schema: Whys,
+      system: `Write one sentence per person explaining why they fit the topic.
+Use only the evidence text. If the evidence does not support a claim, say what the
+evidence actually is. Return ONLY JSON: { "whys": [{ "name": "...", "why": "..." }] }`,
+      user: JSON.stringify({
+        topic,
+        people: picks.map((pick) => ({ name: pick.name, evidence: pick.evidence.map((item) => item.text) })),
+      }),
+    });
+    const byName = new Map(result.whys.map((item) => [item.name, item.why]));
+    return picks.map((pick) => {
+      const why = byName.get(pick.name)?.trim();
+      return why ? { ...pick, why: why.slice(0, 400) } : pick;
+    });
+  } catch {
+    return picks;
+  }
+}
 
 function memberPick(person: Person): SpeakerPick {
   const text = person.talkAnswer || person.buildingAnswer;
@@ -56,16 +99,28 @@ export async function findSpeakers(topic: string): Promise<SpeakerResult> {
     .map((row) => memberPick(row.person));
 
   const handles = people.flatMap((person) => (person.links.github ? [person.links.github] : []));
-  const github = await gatherGitHub(topic, handles);
-  const publicPicks: SpeakerPick[] = github.evidence.flatMap((evidence, index) => {
-    const name = github.names[index];
-    if (!name || evidence.text.length === 0) return [];
-    return [{ name, kind: "public" as const, why: evidence.text, evidence: [evidence] }];
+  const settled = await Promise.allSettled([
+    gatherGitHub(topic, handles),
+    gatherDevpost(topic),
+    gatherHn(topic),
+    gatherLuma(topic),
+  ]);
+  const sourceNames = ["github", "devpost", "hn", "luma"] as const;
+  const attempts: Attempt[] = [];
+  const publicPicks: SpeakerPick[] = [];
+  settled.forEach((result, index) => {
+    if (result.status === "rejected") {
+      const message = result.reason instanceof Error ? result.reason.message : "source failed";
+      attempts.push({ runKind: "source", status: "error", subject: sourceNames[index], detail: message });
+      return;
+    }
+    attempts.push(...result.value.attempts);
+    publicPicks.push(...toPublic(result.value));
   });
 
-  const picks = [...members, ...publicPicks].slice(0, 8);
-  await save(topic, picks, github.attempts);
-  return { topic, picks, attempts: github.attempts };
+  const picks = await applyWhys(topic, [...members, ...publicPicks].slice(0, 8));
+  await save(topic, picks, attempts);
+  return { topic, picks, attempts };
 }
 
 export async function listAttempts() {

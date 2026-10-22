@@ -135,5 +135,25 @@
         "detail": "live call failed and the fixture was used"
       }
     ]
+  },
+  "revives": {
+    "revives": [
+      {
+        "threadId": "bots",
+        "quote": "the onboarding bot went quiet after week two",
+        "draftMessage": "Picking \"bots\" back up — \"the onboarding bot went quiet after week two\". Still worth it?"
+      },
+      {
+        "threadId": "rust-planning",
+        "quote": "anyone up for finally picking a date for the rust thing",
+        "draftMessage": "Picking \"rust-planning\" back up — \"anyone up for finally picking a date for the rust thing\". Still worth it?"
+      }
+    ],
+    "attempts": [
+      { "runKind": "thread", "status": "ok", "subject": "bots", "detail": "the onboarding bot went quiet after week two" },
+      { "runKind": "thread", "status": "skipped", "subject": "lunch", "detail": "still active" },
+      { "runKind": "thread", "status": "skipped", "subject": "meme", "detail": "too thin" },
+      { "runKind": "thread", "status": "ok", "subject": "rust-planning", "detail": "anyone up for finally picking a date for the rust thing" }
+    ]
   }
 }

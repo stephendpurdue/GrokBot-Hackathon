@@ -50,3 +50,21 @@ Attempt log. Fixture mode shows `no consent`, `no complement`, and the GitHub so
 
 ## C5
 Default mode calls the live routes. A failed response is shown as text. `?fixture=1` still renders with the API down.
+
+## C6
+Hinge-style deck on `/`. A typed line is tokenised and scored against consented members; swipe right keeps a session connect, swipe left advances.
+
+## B4
+GitHub search stays on `"{topic} location:London"`. An empty result for `community bots` uses the captured fixture and an error attempt.
+
+## B1
+`chatJSON` validates with Zod and retries once. A missing key or model throws `llm not configured`, and intro drafts plus speaker sentences fall back to the template and the evidence text.
+
+## B6
+`reviveThreads` drafts nudges for `rust-planning` and `bots`, and skips `lunch` and `meme`. The lead page shows the drafts.
+
+## sources
+Devpost, Hacker News, and Luma run beside GitHub. A source that fails is an attempt. Luma with no topic overlap is `no host matched topic`.
+
+## answers
+`POST /api/answers` checks `x-webhook-secret` and upserts the Southbank member, tags, and four answers.

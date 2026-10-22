@@ -1,8 +1,17 @@
+import { z } from "zod";
 import { pairKey, pickWeeklyPairs, scorePair, weekStart, type Profile, type ScoredPair } from "../contract/match";
 import type { Attempt, IntroCard, IntroRunResult } from "../contract/schema";
+import { chatJSON } from "../llm/client";
 import { tryDb } from "./db";
 import { memory, rememberAttempts } from "./memory";
 import { loadPeople, type Person } from "./people";
+
+const Drafts = z.object({
+  drafts: z.array(z.object({
+    key: z.string(),
+    message: z.string().min(1).max(400),
+  })),
+});
 
 function draftMessage(a: string, b: string, reason: string) {
   return `${a} — ${b}. ${reason}. Want an intro this week?`.slice(0, 400);
@@ -50,6 +59,30 @@ function toCards(people: Person[], pairs: ScoredPair[], week: string): IntroCard
       draftMessage: draftMessage(a.displayName, b.displayName, pair.reasons[0] ?? "Worth an intro"),
     };
   });
+}
+
+async function fillDrafts(pairs: ScoredPair[], cards: IntroCard[]): Promise<IntroCard[]> {
+  if (!process.env.LLM_API_KEY || !process.env.LLM_MODEL || cards.length === 0) return cards;
+  try {
+    const result = await chatJSON({
+      schema: Drafts,
+      system: `Write one intro message per pair, max 280 characters, warm and specific.
+Use only the reasons and quotes provided. Do not add facts, events, or shared history.
+Return ONLY JSON: { "drafts": [{ "key": "<pair key>", "message": "..." }] }`,
+      user: JSON.stringify(pairs.map((pair, index) => ({
+        key: pair.key,
+        reasons: pair.reasons,
+        quotes: cards[index]?.quotes ?? { a: "", b: "" },
+      }))),
+    });
+    const byKey = new Map(result.drafts.map((draft) => [draft.key, draft.message]));
+    return cards.map((card, index) => {
+      const message = byKey.get(pairs[index]?.key ?? "")?.trim();
+      return message ? { ...card, draftMessage: message.slice(0, 400) } : card;
+    });
+  } catch {
+    return cards;
+  }
 }
 
 function resultFor(people: Person[], pairs: ScoredPair[], week: string, fromCache: boolean): IntroRunResult {
@@ -137,8 +170,9 @@ export async function runIntros(asOf: string, onStep?: (step: string) => void): 
     : new Set([...memory.weeks.values()].flatMap((item) => item.keys));
   onStep?.("match");
   const pairs = pickWeeklyPairs(people, used);
-  onStep?.("draft");
   const built = resultFor(people, pairs, week, false);
+  built.intros = await fillDrafts(pairs, built.intros);
+  onStep?.("draft");
   onStep?.("save");
   if (db) await saveWeek(people, built.intros, built.attempts);
   else {
