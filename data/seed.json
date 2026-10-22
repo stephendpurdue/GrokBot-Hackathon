@@ -1,0 +1,211 @@
+{
+  "community": { "name": "Southbank Builders", "slug": "southbank" },
+  "members": [
+    {
+      "displayName": "Ada Okonkwo",
+      "handle": "ada",
+      "consentIntros": true,
+      "offers": ["rust", "cli"],
+      "wants": ["ui"],
+      "builds": ["meetup-checkin"],
+      "talks": ["rust"],
+      "links": {},
+      "answers": {
+        "building": "A Rust CLI that checks people in at meetups.",
+        "wants": "Someone who has shipped a small UI.",
+        "offers": "Rust and CLIs.",
+        "talk": "Rust for people who write scripts."
+      }
+    },
+    {
+      "displayName": "Ben Shah",
+      "handle": "ben",
+      "consentIntros": true,
+      "offers": ["ui"],
+      "wants": ["rust"],
+      "builds": ["devtools-site"],
+      "talks": ["design"],
+      "links": {},
+      "answers": {
+        "building": "A landing-page system for devtools.",
+        "wants": "A Rust person to pair with on a CLI.",
+        "offers": "UI and landing pages.",
+        "talk": "Designing for developers."
+      }
+    },
+    {
+      "displayName": "Chioma Adeyemi",
+      "handle": "chioma",
+      "consentIntros": true,
+      "offers": ["bots", "discord"],
+      "wants": ["writing"],
+      "builds": ["onboarding-bot"],
+      "talks": ["community-bots"],
+      "links": { "github": "chioma-not-a-real-user" },
+      "answers": {
+        "building": "An onboarding bot for my community.",
+        "wants": "A writer, so it sounds human.",
+        "offers": "Bots and Discord.",
+        "talk": "Community bots that don't annoy members."
+      }
+    },
+    {
+      "displayName": "Dan Ellis",
+      "handle": "dan",
+      "consentIntros": true,
+      "offers": ["writing"],
+      "wants": ["bots"],
+      "builds": ["newsletter"],
+      "talks": ["community-ops"],
+      "links": {},
+      "answers": {
+        "building": "A short newsletter for the group.",
+        "wants": "A bot person to try the ideas on.",
+        "offers": "Writing and community ops.",
+        "talk": "Getting members to answer questions."
+      }
+    },
+    {
+      "displayName": "Elena Petrova",
+      "handle": "elena",
+      "consentIntros": true,
+      "offers": ["python", "data"],
+      "wants": ["production-ml"],
+      "builds": ["quant-notebook"],
+      "talks": ["research"],
+      "links": {},
+      "answers": {
+        "building": "A quant research notebook.",
+        "wants": "Someone who has put a model in production.",
+        "offers": "Python and data.",
+        "talk": "What our reading group actually reads."
+      }
+    },
+    {
+      "displayName": "Farid Hassan",
+      "handle": "farid",
+      "consentIntros": true,
+      "offers": ["production-ml"],
+      "wants": ["data"],
+      "builds": ["eval-harness"],
+      "talks": ["evals"],
+      "links": {},
+      "answers": {
+        "building": "An eval harness for support bots.",
+        "wants": "A data person with a real dataset.",
+        "offers": "Production ML.",
+        "talk": "Evals when you have 40 users."
+      }
+    },
+    {
+      "displayName": "Maya Rahman",
+      "handle": "maya",
+      "consentIntros": true,
+      "offers": ["desktop"],
+      "wants": ["cli"],
+      "builds": ["tauri-app"],
+      "talks": ["desktop"],
+      "links": {},
+      "answers": {
+        "building": "A Tauri desktop app for the group.",
+        "wants": "A CLI review before I ship it.",
+        "offers": "Desktop apps.",
+        "talk": "Shipping a desktop app from a chat group."
+      }
+    },
+    {
+      "displayName": "Noah Grant",
+      "handle": "noah",
+      "consentIntros": true,
+      "offers": ["python"],
+      "wants": ["ui"],
+      "builds": ["charts"],
+      "talks": ["data-viz"],
+      "links": {},
+      "answers": {
+        "building": "Small charts for event attendance.",
+        "wants": "A UI pair.",
+        "offers": "Python.",
+        "talk": "Showing a community its own data."
+      }
+    },
+    {
+      "displayName": "Iris Chen",
+      "handle": "iris",
+      "consentIntros": true,
+      "offers": [],
+      "wants": [],
+      "builds": [],
+      "talks": [],
+      "links": {},
+      "answers": {
+        "building": "Not much right now.",
+        "wants": "Nothing specific. Mostly lurking.",
+        "offers": "Not sure yet.",
+        "talk": ""
+      }
+    },
+    {
+      "displayName": "Jon Blake",
+      "handle": "jon",
+      "consentIntros": true,
+      "offers": [],
+      "wants": [],
+      "builds": [],
+      "talks": [],
+      "links": {},
+      "answers": {
+        "building": "Tinkering.",
+        "wants": "Nothing in particular.",
+        "offers": "Memes.",
+        "talk": ""
+      }
+    },
+    {
+      "displayName": "Kai Rahman",
+      "handle": "kai",
+      "consentIntros": false,
+      "offers": ["rust"],
+      "wants": ["ui"],
+      "builds": ["rust-game"],
+      "talks": ["rust"],
+      "links": {},
+      "answers": {
+        "building": "A small Rust game.",
+        "wants": "A designer.",
+        "offers": "Rust.",
+        "talk": "Game dev in Rust."
+      }
+    },
+    {
+      "displayName": "Leah Cohen",
+      "handle": "leah",
+      "consentIntros": false,
+      "offers": ["writing"],
+      "wants": ["bots"],
+      "builds": ["notes"],
+      "talks": ["writing"],
+      "links": {},
+      "answers": {
+        "building": "Notes on how we write to members.",
+        "wants": "To see them used in a bot.",
+        "offers": "Writing.",
+        "talk": "Tone of voice for communities."
+      }
+    }
+  ],
+  "messages": [
+    { "threadId": "rust-planning", "handle": "ada", "content": "anyone up for finally picking a date for the rust thing", "createdAt": "2026-09-01T09:00:00Z" },
+    { "threadId": "rust-planning", "handle": "ben", "content": "Thursday after work is free if you are.", "createdAt": "2026-09-01T09:05:00Z" },
+    { "threadId": "rust-planning", "handle": "ada", "content": "Thursday works, I'll book a table.", "createdAt": "2026-09-01T09:12:00Z" },
+    { "threadId": "rust-planning", "handle": "ben", "content": "Booked. I'll bring the CLI sketch.", "createdAt": "2026-09-01T18:00:00Z" },
+    { "threadId": "bots", "handle": "chioma", "content": "the onboarding bot went quiet after week two", "createdAt": "2026-09-08T10:00:00Z" },
+    { "threadId": "bots", "handle": "dan", "content": "The second message is too long and people stop reading.", "createdAt": "2026-09-08T10:20:00Z" },
+    { "threadId": "bots", "handle": "chioma", "content": "I'll cut it to one question.", "createdAt": "2026-09-09T11:00:00Z" },
+    { "threadId": "bots", "handle": "dan", "content": "Send me the short version and I'll edit the tone.", "createdAt": "2026-09-10T15:00:00Z" },
+    { "threadId": "lunch", "handle": "noah", "content": "Lunch on Tuesday?", "createdAt": "2026-10-18T12:00:00Z" },
+    { "threadId": "lunch", "handle": "maya", "content": "I'm in if it's near the station.", "createdAt": "2026-10-18T12:10:00Z" },
+    { "threadId": "lunch", "handle": "noah", "content": "Same place as last time, noon.", "createdAt": "2026-10-20T09:00:00Z" },
+    { "threadId": "meme", "handle": "jon", "content": "This bug is just a meme at this point.", "createdAt": "2026-09-01T20:00:00Z" }
+  ]
+}

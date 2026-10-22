@@ -1,0 +1,41 @@
+{
+  "query": "bots location:London",
+  "captured": "2026-10-22",
+  "github": [
+    {
+      "login": "migueldemoura",
+      "name": "Miguel de Moura",
+      "html_url": "https://github.com/migueldemoura",
+      "location": "London, UK",
+      "public_repos": 8
+    },
+    {
+      "login": "dzianissokalau",
+      "name": "Dzianis Sokalau",
+      "html_url": "https://github.com/dzianissokalau",
+      "location": "London",
+      "public_repos": 6
+    },
+    {
+      "login": "pokerwars",
+      "name": "pokerwars.io",
+      "html_url": "https://github.com/pokerwars",
+      "location": "London",
+      "public_repos": 4
+    },
+    {
+      "login": "krisztianlukacs",
+      "name": "Krisztian Lukacs",
+      "html_url": "https://github.com/krisztianlukacs",
+      "location": "London",
+      "public_repos": 33
+    },
+    {
+      "login": "Bottr-js",
+      "name": "Bottr",
+      "html_url": "https://github.com/Bottr-js",
+      "location": "London",
+      "public_repos": 6
+    }
+  ]
+}

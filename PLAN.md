@@ -122,7 +122,7 @@ Do not add Cognee, mem0, sentence-transformers, graphology, Baileys, or whatsapp
 
 ```
 # Supabase
-NEXT_PUBLIC_SUPABASE_URL=sb_publishable_awgpuHIX-a75TJ4Wn-u7QA_E32ahZRR
+NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=        # server only
 

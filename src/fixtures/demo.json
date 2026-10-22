@@ -1,0 +1,139 @@
+{
+  "weekOne": {
+    "weekStart": "2026-10-19",
+    "fromCache": false,
+    "intros": [
+      {
+        "weekStart": "2026-10-19",
+        "memberA": "Ada Okonkwo",
+        "memberB": "Ben Shah",
+        "score": 6,
+        "reasons": [
+          "Ben Shah offers ui, which Ada Okonkwo wants",
+          "Ada Okonkwo offers rust, which Ben Shah wants"
+        ],
+        "quotes": {
+          "a": "Someone who has shipped a small UI.",
+          "b": "A Rust person to pair with on a CLI."
+        },
+        "draftMessage": "Ada Okonkwo — Ben Shah. Ben Shah offers ui, which Ada Okonkwo wants. Want an intro this week?"
+      },
+      {
+        "weekStart": "2026-10-19",
+        "memberA": "Chioma Adeyemi",
+        "memberB": "Dan Ellis",
+        "score": 6,
+        "reasons": [
+          "Dan Ellis offers writing, which Chioma Adeyemi wants",
+          "Chioma Adeyemi offers bots, which Dan Ellis wants"
+        ],
+        "quotes": {
+          "a": "A writer, so it sounds human.",
+          "b": "A bot person to try the ideas on."
+        },
+        "draftMessage": "Chioma Adeyemi — Dan Ellis. Dan Ellis offers writing, which Chioma Adeyemi wants. Want an intro this week?"
+      },
+      {
+        "weekStart": "2026-10-19",
+        "memberA": "Elena Petrova",
+        "memberB": "Farid Hassan",
+        "score": 6,
+        "reasons": [
+          "Farid Hassan offers production-ml, which Elena Petrova wants",
+          "Elena Petrova offers data, which Farid Hassan wants"
+        ],
+        "quotes": {
+          "a": "Someone who has put a model in production.",
+          "b": "A data person with a real dataset."
+        },
+        "draftMessage": "Elena Petrova — Farid Hassan. Farid Hassan offers production-ml, which Elena Petrova wants. Want an intro this week?"
+      }
+    ],
+    "attempts": [
+      { "runKind": "intro", "status": "skipped", "subject": "Maya Rahman", "detail": "best partner already introduced" },
+      { "runKind": "intro", "status": "skipped", "subject": "Noah Grant", "detail": "best partner already introduced" },
+      { "runKind": "intro", "status": "skipped", "subject": "Iris Chen", "detail": "no complement" },
+      { "runKind": "intro", "status": "skipped", "subject": "Jon Blake", "detail": "no complement" },
+      { "runKind": "intro", "status": "skipped", "subject": "Kai Rahman", "detail": "no consent" },
+      { "runKind": "intro", "status": "skipped", "subject": "Leah Cohen", "detail": "no consent" }
+    ]
+  },
+  "weekTwo": {
+    "weekStart": "2026-11-16",
+    "fromCache": false,
+    "intros": [
+      {
+        "weekStart": "2026-11-16",
+        "memberA": "Ada Okonkwo",
+        "memberB": "Maya Rahman",
+        "score": 3,
+        "reasons": ["Ada Okonkwo offers cli, which Maya Rahman wants"],
+        "quotes": {
+          "a": "Someone who has shipped a small UI.",
+          "b": "A CLI review before I ship it."
+        },
+        "draftMessage": "Ada Okonkwo — Maya Rahman. Ada Okonkwo offers cli, which Maya Rahman wants. Want an intro this week?"
+      },
+      {
+        "weekStart": "2026-11-16",
+        "memberA": "Ben Shah",
+        "memberB": "Noah Grant",
+        "score": 3,
+        "reasons": ["Ben Shah offers ui, which Noah Grant wants"],
+        "quotes": {
+          "a": "A Rust person to pair with on a CLI.",
+          "b": "A UI pair."
+        },
+        "draftMessage": "Ben Shah — Noah Grant. Ben Shah offers ui, which Noah Grant wants. Want an intro this week?"
+      }
+    ],
+    "attempts": [
+      { "runKind": "intro", "status": "skipped", "subject": "Kai Rahman", "detail": "no consent" }
+    ]
+  },
+  "speakers": {
+    "topic": "community bots",
+    "picks": [
+      {
+        "name": "Chioma Adeyemi",
+        "kind": "member",
+        "why": "Community bots that don't annoy members.",
+        "evidence": [
+          {
+            "source": "answers",
+            "label": "live",
+            "url": null,
+            "text": "Community bots that don't annoy members."
+          }
+        ]
+      },
+      {
+        "name": "Miguel de Moura",
+        "kind": "public",
+        "why": "Miguel de Moura · London, UK · 8 public repos",
+        "evidence": [
+          {
+            "source": "github",
+            "label": "fixture",
+            "url": "https://github.com/migueldemoura",
+            "text": "Miguel de Moura · London, UK · 8 public repos"
+          }
+        ]
+      }
+    ],
+    "attempts": [
+      {
+        "runKind": "source",
+        "status": "error",
+        "subject": "chioma-not-a-real-user",
+        "detail": "GitHub user not found"
+      },
+      {
+        "runKind": "source",
+        "status": "error",
+        "subject": "github",
+        "detail": "live call failed and the fixture was used"
+      }
+    ]
+  }
+}
