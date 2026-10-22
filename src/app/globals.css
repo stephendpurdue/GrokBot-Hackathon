@@ -1,19 +1,220 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f3efe8;
+  --foreground: #1c1917;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-dm), "Helvetica Neue", sans-serif;
+  --font-serif: var(--font-prompt), Georgia, serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overscroll-behavior: none;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, #f3efe8, #f6e4d8, #e5efe9, #f3efe8);
+  background-size: 280% 280%;
+  animation: wash 26s ease-in-out infinite;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(48px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.orb-a {
+  width: min(42vw, 28rem);
+  height: min(42vw, 28rem);
+  left: -8%;
+  top: 6%;
+  background: #c47b5d;
+  animation: drift-a 18s ease-in-out infinite alternate;
+}
+
+.orb-b {
+  width: min(36vw, 24rem);
+  height: min(36vw, 24rem);
+  right: -6%;
+  bottom: 4%;
+  background: #6d948a;
+  animation: drift-b 22s ease-in-out infinite alternate;
+}
+
+.orb-c {
+  width: min(28vw, 18rem);
+  height: min(28vw, 18rem);
+  left: 34%;
+  top: 36%;
+  background: #c4a15a;
+  opacity: 0.35;
+  animation: drift-c 16s ease-in-out infinite alternate;
+}
+
+@keyframes wash {
+  0%,
+  100% {
+    background-position: 0% 40%;
+  }
+  50% {
+    background-position: 100% 60%;
+  }
+}
+
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(8vw, 6vh, 0);
+  }
+}
+
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-7vw, -5vh, 0);
+  }
+}
+
+@keyframes drift-c {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4vw, -4vh, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .orb {
+    animation: none;
+  }
+
+  .cursor-shape {
+    transition: none;
+  }
+}
+
+.cursor-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--background);
+  --mx: 0.5;
+  --my: 0.42;
+}
+
+.cursor-shape {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.cursor-ring {
+  width: 220px;
+  height: 220px;
+  border: 2px solid #c47b5d;
+  border-radius: 9999px;
+  transform: translate(calc(var(--mx) * 100vw - 110px), calc(var(--my) * 100vh - 110px));
+  transition: transform 260ms ease-out;
+}
+
+.cursor-ring-b {
+  width: 96px;
+  height: 96px;
+  border-color: #3f6f66;
+  transform: translate(calc(var(--mx) * 72vw + 6vw), calc(var(--my) * 64vh + 8vh));
+  transition-duration: 480ms;
+}
+
+.cursor-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #c23b4a;
+  transform: translate(calc(var(--mx) * 100vw - 6px), calc(var(--my) * 100vh - 6px));
+  transition: transform 80ms linear;
+}
+
+.cursor-diamond {
+  width: 16px;
+  height: 16px;
+  background: #9a7040;
+  transform: translate(calc((1 - var(--mx)) * 78vw), calc(var(--my) * 72vh)) rotate(45deg);
+  transition: transform 420ms ease-out;
+}
+
+.menu-surface {
+  background: #f7f4ef;
+}
+
+/* stone-900 is both body text and button fill; white text also sits on the card photos */
+html.dark {
+  --background: #141210;
+  --foreground: #f3efe8;
+  --color-stone-100: #3a332c;
+  --color-stone-200: #4a433b;
+  --color-stone-400: #9c9084;
+  --color-stone-500: #b0a496;
+  --color-stone-600: #c4baae;
+  --color-stone-700: #d5cdc2;
+  --color-stone-800: #e4ddd2;
+  --color-stone-900: #f3efe8;
+  --color-red-800: #ffb4a8;
+  color-scheme: dark;
+}
+
+html.dark .bg-stone-900.text-white {
+  color: #1c1917;
+}
+
+html.dark .bg-white {
+  background-color: #292420;
+}
+
+html.dark .bg-white\/90 {
+  background-color: color-mix(in oklab, #292420 90%, transparent);
+}
+
+html.dark .bg-white\/80 {
+  background-color: color-mix(in oklab, #292420 88%, transparent);
+}
+
+html.dark .border-white\/70 {
+  border-color: #4a433b;
+}
+
+html.dark .menu-surface {
+  background: #1e1a17;
+}
+
+html.dark .stage {
+  background: linear-gradient(120deg, #141210, #2c221c, #1a2622, #141210);
+}
+
+html.dark .orb {
+  opacity: 0.32;
+}
+
+html.dark .orb-c {
+  opacity: 0.2;
 }

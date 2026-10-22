@@ -57,14 +57,14 @@ export async function loadPeople(): Promise<Person[]> {
   const db = tryDb();
   if (!db) return fromSeed();
 
-  const { data: members, error } = await db
-    .from("members")
-    .select("id, display_name, handle, consent_intros, offers, wants, builds, talks, links");
-  if (error) throw new Error(error.message);
-  const { data: answers, error: answerError } = await db
-    .from("answers")
-    .select("member_id, question_key, answer");
-  if (answerError) throw new Error(answerError.message);
+  const [memberResult, answerResult] = await Promise.all([
+    db.from("members").select("id, display_name, handle, consent_intros, offers, wants, builds, talks, links"),
+    db.from("answers").select("member_id, question_key, answer"),
+  ]);
+  if (memberResult.error) throw new Error(memberResult.error.message);
+  if (answerResult.error) throw new Error(answerResult.error.message);
+  const members = memberResult.data;
+  const answers = answerResult.data;
 
   const memberRows = z.array(z.object({
     id: z.string(),

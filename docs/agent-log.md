@@ -68,3 +68,36 @@ Devpost, Hacker News, and Luma run beside GitHub. A source that fails is an atte
 
 ## answers
 `POST /api/answers` checks `x-webhook-secret` and upserts the Southbank member, tags, and four answers.
+
+## crowd
+`src/components/crowd.ts`. The deck mixes 320 synthetic members, drawn across a 93-word bank, in with the loaded people. The seed file stays at twelve so intro checks do not move.
+
+## HOME
+Landing page at `/` with three slow colour washes. The deck moved to `/demo`, reached from “Open the demo”.
+
+## menu
+Side menu on every screen lists saved connections and links to `/settings` and `/account`. A right swipe writes the person into localStorage; the account name is stored the same way.
+
+## palette
+The menu is a command palette. ⌘K opens it, search filters pages and connections, and the installed Motion package springs the dialog and the selection highlight.
+
+## C7
+Deck page background drifts with the same washes. Each card also shows the offer, the talk, the project tag, and offers/wants/builds/talks, with shared words filled in.
+
+## swipe
+The deck paints a drag on the card node, so a swipe does not re-render both faces. The form starts on the local crowd, and the member load reads members and answers together.
+
+## C8
+Deck backdrop is sharp rings and marks that track the pointer. The blurred washes stay on the landing page.
+
+## C9
+Deck cards have a hard edge on a flat `#f3efe8` page. The shadow and the faded card behind are gone.
+
+## theme
+Command palette command switches light and dark. A cookie sets `html.dark` on the next load, and dark mode remaps the stone variables while button labels and card photos stay readable.
+
+## welcome
+Homepage names the three steps and who appears. Same washes and type; the deck stays at `/demo`.
+
+## profile
+View profile on a confirmed connection opens `/connections/[handle]`. The swipe stores answers, tags, and links; the page shows shared words and http(s) contact links.
